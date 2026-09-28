@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MedEquipTrack SRS v1.0 (Draft)</title>
+<style>
+:root{--bg:#fff;--fg:#1c2330;--mut:#5b6678;--bd:#dde2ea;--ac:#0b6e6e;--sb:#f4f7fa;--code:#f1f4f8;--th:#e8eef4;--q:#eef7f7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161d;--fg:#e4e9f0;--mut:#9aa6b8;--bd:#2a3240;--ac:#4fc3c3;--sb:#181e27;--code:#1b222c;--th:#202a36;--q:#15262a}}
+:root[data-theme="dark"]{--bg:#12161d;--fg:#e4e9f0;--mut:#9aa6b8;--bd:#2a3240;--ac:#4fc3c3;--sb:#181e27;--code:#1b222c;--th:#202a36;--q:#15262a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{display:flex;max-width:1400px;margin:0 auto}
+aside{position:sticky;top:0;align-self:flex-start;height:100vh;height:100dvh;width:290px;flex:none;overflow-y:auto;background:var(--sb);border-right:1px solid var(--bd);padding:calc(env(safe-area-inset-top,0px) + 16px) 12px 24px}
+aside .t{font-weight:700;font-size:14px;margin:0 8px 10px;color:var(--ac)}
+aside a{display:block;color:var(--fg);text-decoration:none;padding:4px 8px;border-radius:6px;font-size:13.5px;line-height:1.35}
+aside a.l2{font-weight:600;margin-top:8px}
+aside a.l3{padding-left:20px;color:var(--mut)}
+aside a:hover,aside a.on{background:var(--th);color:var(--ac)}
+main{flex:1;min-width:0;padding:32px 40px 80px;max-width:980px}
+h1,h2,h3,h4{line-height:1.25;margin:1.8em 0 .5em}
+h1{font-size:2rem;margin-top:0}h2{font-size:1.55rem;border-bottom:2px solid var(--bd);padding-bottom:.3em}h3{font-size:1.2rem}
+.anc{opacity:0;text-decoration:none;color:var(--ac);font-size:.8em;margin-left:.3em}
+h2:hover .anc,h3:hover .anc{opacity:1}
+a{color:var(--ac)}
+.tw{overflow-x:auto;margin:1em 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--bd);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--th)}
+blockquote{margin:1em 0;padding:.6em 1em;background:var(--q);border-left:4px solid var(--ac);border-radius:4px}
+pre{background:var(--code);padding:14px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.4}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}pre code{padding:0;background:none}
+pre.mermaid{background:transparent;text-align:center;font-size:inherit}
+hr{border:0;border-top:1px solid var(--bd);margin:2em 0}
+.contents{background:var(--sb);border:1px solid var(--bd);border-radius:10px;padding:8px 20px 16px}
+.contents h2.ct{border:0;margin:.6em 0 .3em;font-size:1.3rem}
+.contents ol{padding-left:1.2em;margin:0}.contents ol>li{margin:.5em 0;font-weight:600}
+.contents ul{list-style:none;padding-left:.6em;margin:.2em 0 0;font-weight:400;columns:2;column-gap:2em}
+.contents ul li{font-size:14px;margin:.15em 0;break-inside:avoid}
+#top{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--ac);color:var(--bg);border-radius:999px;padding:8px 14px;text-decoration:none;font-size:13px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#mb{display:none}
+@media (max-width:900px){
+ aside{position:fixed;left:0;top:0;z-index:20;transform:translateX(-100%);transition:transform .2s;width:min(300px,85vw)}
+ aside.open{transform:none}
+ main{padding:56px 18px 80px}
+ #mb{display:block;position:fixed;left:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:30;background:var(--ac);color:var(--bg);border:0;border-radius:8px;padding:7px 12px;font-weight:600}
+ .contents ul{columns:1}
+}
+</style></head><body>
+<button id="mb" type="button">☰ Contents</button>
+<div class="wrap">
+<aside id="sb"><div class="t">MedEquipTrack SRS v1.0</div>
+<a class="l2" href="#1-introduction">1. Introduction</a>
+<a class="l2" href="#2-overall-description">2. Overall Description</a>
+<a class="l2" href="#3-system-features-and-functional-requirements">3. System Features and Functional Requirements</a>
+<a class="l2" href="#4-external-interface-requirements">4. External Interface Requirements</a>
+<a class="l2" href="#5-non-functional-requirements">5. Non-Functional Requirements</a>
+<a class="l2" href="#6-data-requirements-security-constraints">6. Data Requirements &amp; Security Constraints</a>
+<a class="l2" href="#7-system-models-data-flow">7. System Models &amp; Data Flow</a>
+<a class="l2" href="#8-appendices-regulatory-guidelines">8. Appendices &amp; Regulatory Guidelines</a>
+</aside>
+<main id="doc">
+<h1 id="software-requirements-specification-srs">Software Requirements Specification (SRS) <a class="anc" href="#software-requirements-specification-srs" aria-label="Link">#</a></h1>
+<h2 id="medequiptrack-medical-equipment-maintenance-calibration-tracking-system">MedEquipTrack: Medical Equipment Maintenance &amp; Calibration Tracking System <a class="anc" href="#medequiptrack-medical-equipment-maintenance-calibration-tracking-system" aria-label="Link">#</a></h2>
+<h3 id="document-header">Document Header <a class="anc" href="#document-header" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Document Title</strong></td>
+<td>MedEquipTrack SRS</td>
+</tr>
+<tr>
+<td><strong>Document Version</strong></td>
+<td>1.0 (Draft)</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>28 September 2026</td>
+</tr>
+<tr>
+<td><strong>Prepared By</strong></td>
+<td>Lead Engineer / Biomedical Systems Team</td>
+</tr>
+<tr>
+<td><strong>Standard Followed</strong></td>
+<td>IEEE 830 / ISO/IEC/IEEE 29148 (adapted)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>Draft for Technical &amp; Regulatory Review</td>
+</tr>
+<tr>
+<td><strong>Compliance Verification Required</strong></td>
+<td>FDA 21 CFR Part 11; ISO 13485; ISO/IEC 17025</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Regulatory note.</strong> Hospitals are generally not device manufacturers, so 21 CFR Part 11 does not automatically bind them. MedEquipTrack is nevertheless designed to Part 11 controls (audit trails, electronic signatures, record integrity) so that its records are defensible in FDA-facing, NABH, JCI and ISO audits. Regulatory Affairs must confirm the applicable scope per deployment jurisdiction before validation.</p>
+</blockquote>
+<nav class="contents"><h2 class="ct">Table of Contents</h2><ol>
+<li><a href="#1-introduction">1. Introduction</a></li>
+<li><a href="#2-overall-description">2. Overall Description</a></li>
+<li><a href="#3-system-features-and-functional-requirements">3. System Features and Functional Requirements</a></li>
+<li><a href="#4-external-interface-requirements">4. External Interface Requirements</a></li>
+<li><a href="#5-non-functional-requirements">5. Non-Functional Requirements</a></li>
+<li><a href="#6-data-requirements-security-constraints">6. Data Requirements &amp; Security Constraints</a></li>
+<li><a href="#7-system-models-data-flow">7. System Models &amp; Data Flow</a></li>
+<li><a href="#8-appendices-regulatory-guidelines">8. Appendices &amp; Regulatory Guidelines</a></li>
+</ol></nav><hr><h2 id="1-introduction">1. Introduction <a class="anc" href="#1-introduction" aria-label="Link">#</a></h2>
+<h3 id="1-1-purpose">1.1 Purpose <a class="anc" href="#1-1-purpose" aria-label="Link">#</a></h3>
+<p>This SRS defines the functional, non-functional, interface, data and security requirements of <strong>MedEquipTrack</strong>, a cloud-hosted platform for tracking, maintaining, calibrating and auditing medical devices (ventilators, defibrillators, patient monitors, ECG machines, infusion pumps and comparable equipment).</p>
+<p><strong>Intended audience and usage</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Audience</th>
+<th>Use of this document</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Biomedical Engineers / BME Managers</td>
+<td>Validate that workflows match departmental practice</td>
+</tr>
+<tr>
+<td>Hospital Administrators</td>
+<td>Confirm scope, compliance outcomes, and cost/risk alignment</td>
+</tr>
+<tr>
+<td>Biomedical Equipment Technicians (BMETs)</td>
+<td>Confirm mobile and field-workflow requirements</td>
+</tr>
+<tr>
+<td>Regulatory Auditors / Quality Assurance</td>
+<td>Verify traceability, audit-trail and e-signature controls</td>
+</tr>
+<tr>
+<td>Software Architects, Developers, QA/Validation</td>
+<td>Basis for design, implementation, test and IQ/OQ/PQ protocols</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-2-problem-statement">1.2 Problem Statement <a class="anc" href="#1-2-problem-statement" aria-label="Link">#</a></h3>
+<p>Healthcare facilities operate thousands of devices across dozens of departments, commonly managed through spreadsheets, paper logbooks or generic CMMS tools. This produces recurring, patient-safety-relevant failures:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problem</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>Uncalibrated or out-of-tolerance devices remain in clinical use</td>
+<td>Diagnostic and dosing errors (e.g., infusion pump flow drift, monitor SpO₂/NIBP inaccuracy)</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Preventive maintenance (PM) schedules missed or untracked</td>
+<td>Higher failure rates, shorter device life, elevated MTBF risk</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>Equipment location and status unknown</td>
+<td>Time lost searching for devices during emergencies; hoarding and idle assets</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>Records incomplete, unsigned or alterable</td>
+<td>Non-conformities during NABH, JCI, ISO 13485 or regulatory audits</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>Unexpected downtime during surgeries or emergencies</td>
+<td>Procedure delays, patient harm, revenue loss</td>
+</tr>
+<tr>
+<td>P6</td>
+<td>Reference standards used by technicians are themselves out of calibration</td>
+<td>Invalid calibration results and broken traceability chain</td>
+</tr>
+<tr>
+<td>P7</td>
+<td>AMC/CMC contracts and warranties lapse unnoticed</td>
+<td>Avoidable repair cost and vendor SLA disputes</td>
+</tr>
+</tbody>
+</table></div>
+<p>MedEquipTrack addresses P1–P7 through automated scheduling, enforced quarantine of non-compliant devices, digital signed records and immutable audit logging.</p>
+<h3 id="1-3-scope">1.3 Scope <a class="anc" href="#1-3-scope" aria-label="Link">#</a></h3>
+<p><strong>In Scope (v1.0)</strong>
+- Asset lifecycle management (acquisition record through decommissioning)
+- Automated PM and calibration scheduling with alerts
+- QR/RFID tag generation and lookup
+- Breakdown work order (WO) ticketing
+- Calibration execution, e-signature and certificate generation
+- Spare parts inventory linked to device models
+- Vendor and service contract (AMC/CMC) management
+- Audit trail, compliance reporting and dashboards
+- HIS integration for department/location master data</p>
+<p><strong>Out of Scope (v1.0)</strong>
+- Real-time telemetry or automated reading of diagnostic/clinical data from devices
+- Automated purchasing and procurement of capital equipment
+- Mapping of devices to patient EHR records or clinical diagnoses
+- Clinical decision support
+- Financial accounting and depreciation ledgers (export only)</p>
+<h3 id="1-4-definitions-acronyms-and-abbreviations">1.4 Definitions, Acronyms, and Abbreviations <a class="anc" href="#1-4-definitions-acronyms-and-abbreviations" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AMC</strong></td>
+<td>Annual Maintenance Contract: vendor service agreement, typically labour-only or limited-parts</td>
+</tr>
+<tr>
+<td><strong>BME</strong></td>
+<td>Biomedical Engineering</td>
+</tr>
+<tr>
+<td><strong>BMET</strong></td>
+<td>Biomedical Equipment Technician</td>
+</tr>
+<tr>
+<td><strong>Breakdown Maintenance</strong></td>
+<td>Corrective maintenance performed after a fault or failure is reported</td>
+</tr>
+<tr>
+<td><strong>Calibration</strong></td>
+<td>Comparison of a device's measurements against a reference standard of higher accuracy, with documented deviation and correction</td>
+</tr>
+<tr>
+<td><strong>CMC</strong></td>
+<td>Comprehensive Maintenance Contract: vendor agreement including parts and labour</td>
+</tr>
+<tr>
+<td><strong>CMMS</strong></td>
+<td>Computerized Maintenance Management System</td>
+</tr>
+<tr>
+<td><strong>DoW / RPO / RTO</strong></td>
+<td>Disaster recovery metrics: Recovery Point Objective / Recovery Time Objective</td>
+</tr>
+<tr>
+<td><strong>FDA 21 CFR Part 11</strong></td>
+<td>US FDA regulation on electronic records and electronic signatures</td>
+</tr>
+<tr>
+<td><strong>HIS</strong></td>
+<td>Hospital Information System</td>
+</tr>
+<tr>
+<td><strong>HL7 / FHIR</strong></td>
+<td>Healthcare data exchange standards</td>
+</tr>
+<tr>
+<td><strong>IQ/OQ/PQ</strong></td>
+<td>Installation / Operational / Performance Qualification (software validation stages)</td>
+</tr>
+<tr>
+<td><strong>ISO 13485</strong></td>
+<td>Quality management systems for medical devices</td>
+</tr>
+<tr>
+<td><strong>ISO/IEC 17025</strong></td>
+<td>General requirements for competence of testing and calibration laboratories</td>
+</tr>
+<tr>
+<td><strong>MTBF</strong></td>
+<td>Mean Time Between Failures (repairable systems)</td>
+</tr>
+<tr>
+<td><strong>MTTF</strong></td>
+<td>Mean Time To Failure (non-repairable items)</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>Mean Time To Repair</td>
+</tr>
+<tr>
+<td><strong>NIST Traceability</strong></td>
+<td>Unbroken chain of comparisons linking a measurement to national/international standards, each with stated uncertainty</td>
+</tr>
+<tr>
+<td><strong>PM</strong></td>
+<td>Preventive Maintenance</td>
+</tr>
+<tr>
+<td><strong>Quarantine</strong></td>
+<td>System state that blocks a device from clinical use until compliance is restored</td>
+</tr>
+<tr>
+<td><strong>RBAC</strong></td>
+<td>Role-Based Access Control</td>
+</tr>
+<tr>
+<td><strong>SLA</strong></td>
+<td>Service Level Agreement</td>
+</tr>
+<tr>
+<td><strong>TUR/TAR</strong></td>
+<td>Test Uncertainty/Accuracy Ratio between reference standard and unit under test</td>
+</tr>
+<tr>
+<td><strong>UUT</strong></td>
+<td>Unit Under Test</td>
+</tr>
+<tr>
+<td><strong>WO</strong></td>
+<td>Work Order</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-5-references">1.5 References <a class="anc" href="#1-5-references" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REF-1</td>
+<td>IEEE Std 830-1998 / ISO/IEC/IEEE 29148:2018, Requirements Engineering</td>
+</tr>
+<tr>
+<td>REF-2</td>
+<td>ISO 13485:2016, Medical devices, Quality management systems (notably cl. 6.3 Infrastructure/maintenance, 7.6 Control of monitoring and measuring equipment, 4.2.5 Control of records)</td>
+</tr>
+<tr>
+<td>REF-3</td>
+<td>21 CFR Part 11, Electronic Records; Electronic Signatures</td>
+</tr>
+<tr>
+<td>REF-4</td>
+<td>ISO/IEC 17025:2017, Competence of testing and calibration laboratories (metrological traceability)</td>
+</tr>
+<tr>
+<td>REF-5</td>
+<td>IEC 62353, Recurrent test and test after repair of medical electrical equipment</td>
+</tr>
+<tr>
+<td>REF-6</td>
+<td>IEC 60601-1, Medical electrical equipment, general requirements for basic safety</td>
+</tr>
+<tr>
+<td>REF-7</td>
+<td>NABH Accreditation Standards for Hospitals (facility management and safety chapters)</td>
+</tr>
+<tr>
+<td>REF-8</td>
+<td>Joint Commission International (JCI) Accreditation Standards for Hospitals (Facility Management and Safety)</td>
+</tr>
+<tr>
+<td>REF-9</td>
+<td>HIPAA Security Rule (45 CFR Part 164) and applicable local data-protection law</td>
+</tr>
+<tr>
+<td>REF-10</td>
+<td>FDA guidance: <em>General Principles of Software Validation</em>; <em>Part 11 Scope and Application</em></td>
+</tr>
+<tr>
+<td>REF-11</td>
+<td>IEC 62304 (for software lifecycle discipline, applied by analogy)</td>
+</tr>
+<tr>
+<td>REF-12</td>
+<td>OWASP ASVS 4.x</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-6-document-overview">1.6 Document Overview <a class="anc" href="#1-6-document-overview" aria-label="Link">#</a></h3>
+<ul>
+<li><strong>Section 2</strong> describes the product context, users, environment, constraints and assumptions.</li>
+<li><strong>Section 3</strong> specifies functional requirements per feature, each with unique ID, priority and acceptance criteria.</li>
+<li><strong>Section 4</strong> defines user, hardware, software and communication interfaces.</li>
+<li><strong>Section 5</strong> defines performance, security, reliability, maintainability and usability requirements.</li>
+<li><strong>Section 6</strong> defines data structures, retention, integrity and security constraints.</li>
+<li><strong>Section 7</strong> presents state, data-flow and entity models.</li>
+<li><strong>Section 8</strong> provides a traceability matrix, regulatory mapping, and open issues.</li>
+</ul>
+<p><strong>Requirement conventions:</strong> "shall" = mandatory; "should" = recommended; "may" = optional. <strong>Priority:</strong> H = release-blocking, M = required for v1.0 unless deferred by change control, L = desirable.</p>
+<hr />
+<h2 id="2-overall-description">2. Overall Description <a class="anc" href="#2-overall-description" aria-label="Link">#</a></h2>
+<h3 id="2-1-product-perspective">2.1 Product Perspective <a class="anc" href="#2-1-product-perspective" aria-label="Link">#</a></h3>
+<p>MedEquipTrack is a standalone, multi-tenant, cloud-hosted web and mobile platform. It is not a medical device and performs no clinical function; it is a quality and maintenance record system.</p>
+<pre><code>                       +--------------------------------------+
+  Web App (BME/Admin)  |           API Gateway (TLS 1.3)      |   HIS (REST / HL7 v2 / FHIR)
+  Mobile App (BMET,    |   AuthN/AuthZ (OIDC, RBAC, MFA)      |&lt;---------------------------&gt;
+  Nurse; offline-first)|--------------------------------------|
+  Vendor Portal        |  Asset | Scheduler | WO | Calibration |   SMTP / SMS Gateway
+        |              |  Inventory | Contracts | Reporting   |&lt;---------------------------&gt;
+        v              |  Notification | Audit Log Service    |
+  QR / RFID / Bluetooth|--------------------------------------|   Object Storage (PDF certs,
+  scanners, label      |  PostgreSQL (primary) | Job Queue    |   photos, attachments; WORM)
+  printers             |  Append-only Audit Store             |
+                       +--------------------------------------+
+</code></pre>
+<h3 id="2-2-product-functions-summary">2.2 Product Functions (Summary) <a class="anc" href="#2-2-product-functions-summary" aria-label="Link">#</a></h3>
+<ul>
+<li><strong>Asset onboarding:</strong> register devices with digital passport, risk class, QR/RFID tag.</li>
+<li><strong>Automated scheduling:</strong> risk-based PM and calibration calendars, alerts, grace periods, auto-quarantine.</li>
+<li><strong>Mobile technician app:</strong> scan-to-open asset, task lists, offline work, photo capture.</li>
+<li><strong>Breakdown ticketing:</strong> staff-raised faults, auto-assignment, SLA-tracked status flow.</li>
+<li><strong>Calibration verification:</strong> digital forms with pass/fail evaluation, reference-standard validity checks, e-signature, certificate generation.</li>
+<li><strong>Spares and contracts:</strong> inventory, low-stock alerts, AMC/CMC and warranty tracking.</li>
+<li><strong>Compliance reporting:</strong> immutable audit trail and one-click audit reports (NABH, JCI, ISO, FDA).</li>
+</ul>
+<h3 id="2-3-user-classes-and-characteristics">2.3 User Classes and Characteristics <a class="anc" href="#2-3-user-classes-and-characteristics" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>User Class</th>
+<th>Technical Skill</th>
+<th>Frequency</th>
+<th>Primary Interface</th>
+<th>Key Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BMET</strong></td>
+<td>High (technical), moderate (software)</td>
+<td>Daily</td>
+<td>Mobile app (often offline), web</td>
+<td>Fast scan lookup, guided calibration forms, minimal typing, gloved/one-handed use</td>
+</tr>
+<tr>
+<td><strong>BME Manager / Chief Engineer</strong></td>
+<td>High</td>
+<td>Daily</td>
+<td>Web dashboard</td>
+<td>Compliance rate, workload, overdue list, approval and sign-off, contract oversight</td>
+</tr>
+<tr>
+<td><strong>Hospital Staff / Ward Nurse (Requester)</strong></td>
+<td>Low</td>
+<td>Occasional</td>
+<td>Mobile / web / QR scan</td>
+<td>Report fault in under 60 seconds, see ticket status, know if device is safe to use</td>
+</tr>
+<tr>
+<td><strong>External Calibration Vendor / Auditor</strong></td>
+<td>Moderate</td>
+<td>Periodic</td>
+<td>Restricted web portal</td>
+<td>Time-boxed, scoped access; upload certificates; read-only audit evidence</td>
+</tr>
+<tr>
+<td><strong>System Administrator</strong></td>
+<td>High (IT)</td>
+<td>As needed</td>
+<td>Web admin console</td>
+<td>User/role management, configuration, integrations, backup monitoring</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2-4-operating-environment">2.4 Operating Environment <a class="anc" href="#2-4-operating-environment" aria-label="Link">#</a></h3>
+<ul>
+<li><strong>Web:</strong> current and previous major versions of Chrome, Edge, Firefox, Safari; responsive from 360 px width.</li>
+<li><strong>Mobile:</strong> Android 10+ and iOS 15+; camera required for QR; Bluetooth 4.0+ for handheld scanners.</li>
+<li><strong>Network:</strong> shall remain usable on 3G/4G and congested hospital Wi-Fi (baseline 1 Mbps, 300 ms RTT); full offline operation for field tasks.</li>
+<li><strong>Hosting:</strong> containerized services on a major cloud provider, deployed in a region satisfying data-residency requirements; optional single-tenant/private deployment.</li>
+<li><strong>Time:</strong> all timestamps stored in UTC (ISO 8601) and displayed in facility local time.</li>
+</ul>
+<h3 id="2-5-design-and-implementation-constraints">2.5 Design and Implementation Constraints <a class="anc" href="#2-5-design-and-implementation-constraints" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DC-1</td>
+<td>Electronic signatures shall satisfy 21 CFR Part 11 Subpart C (unique to one individual, two-component authentication at signing, signature manifestation with printed name, date/time and meaning).</td>
+</tr>
+<tr>
+<td>DC-2</td>
+<td>Audit logs shall be immutable, computer-generated, time-stamped, and retained at least as long as the underlying record (21 CFR 11.10(e)).</td>
+</tr>
+<tr>
+<td>DC-3</td>
+<td>The system shall hold no patient-identifiable information (PII/PHI). Device-to-patient linkage is prohibited by design (Section 1.3); free-text fields shall be screened and warn on patterns resembling patient identifiers.</td>
+</tr>
+<tr>
+<td>DC-4</td>
+<td>Calibration records shall carry a traceability chain to national/international standards (NIST or the national metrology institute, e.g., NPL India), including reference standard ID, certificate number, uncertainty and due date.</td>
+</tr>
+<tr>
+<td>DC-5</td>
+<td>Software shall be validated (IQ/OQ/PQ) and shall support risk-based validation documentation.</td>
+</tr>
+<tr>
+<td>DC-6</td>
+<td>All third-party components shall be inventoried (SBOM) and vulnerability-scanned.</td>
+</tr>
+<tr>
+<td>DC-7</td>
+<td>Regional deployments shall support data residency and local language/locale settings.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2-6-assumptions-and-dependencies">2.6 Assumptions and Dependencies <a class="anc" href="#2-6-assumptions-and-dependencies" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Assumption / Dependency</th>
+<th>Impact if invalid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A-1</td>
+<td>Every in-scope asset carries a durable QR code or RFID tag (or can be tagged at onboarding).</td>
+<td>Scan workflows degrade to manual search; onboarding effort increases</td>
+</tr>
+<tr>
+<td>A-2</td>
+<td>Calibration equipment used by technicians is itself validly certified, with certificates entered into the system.</td>
+<td>Calibration results cannot be validated; system blocks sign-off (FR-4.3)</td>
+</tr>
+<tr>
+<td>A-3</td>
+<td>Manufacturer service manuals and recommended intervals are available to the facility.</td>
+<td>Intervals fall back to risk-based defaults, subject to BME Manager approval</td>
+</tr>
+<tr>
+<td>A-4</td>
+<td>The hospital provides HIS API access or master-data exports for departments and locations.</td>
+<td>Manual/CSV master data maintenance</td>
+</tr>
+<tr>
+<td>A-5</td>
+<td>Users have institutional email; SMS gateway is contracted by the facility.</td>
+<td>Alerts limited to in-app and email</td>
+</tr>
+<tr>
+<td>A-6</td>
+<td>Facility maintains an identity provider (SAML/OIDC) or accepts platform-managed identity.</td>
+<td>Local accounts with enforced MFA are used</td>
+</tr>
+<tr>
+<td>A-7</td>
+<td>Regulatory Affairs determines the applicable regulatory scope per deployment.</td>
+<td>Validation scope may change</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="3-system-features-and-functional-requirements">3. System Features and Functional Requirements <a class="anc" href="#3-system-features-and-functional-requirements" aria-label="Link">#</a></h2>
+<p><em>Each requirement has a unique ID, Priority (H/M/L), and testable acceptance criteria.</em></p>
+<h3 id="3-1-equipment-asset-management-digital-passport">3.1 Equipment Asset Management &amp; Digital Passport <a class="anc" href="#3-1-equipment-asset-management-digital-passport" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-1.1</td>
+<td>The system shall allow authorized users to register an asset with: asset ID (auto-generated), manufacturer, model, serial number, UDI (if available), department, location, purchase date, purchase cost, warranty start/end, vendor, and risk category.</td>
+<td>H</td>
+<td>Asset cannot be saved without mandatory fields; duplicate manufacturer+serial pair is rejected with a clear error.</td>
+</tr>
+<tr>
+<td>FR-1.2</td>
+<td>The system shall assign a risk category (<strong>Critical, High, Medium, Low</strong>) to each asset, defaulted from the device-model template and overridable by a BME Manager with recorded justification.</td>
+<td>H</td>
+<td>Override requires a reason; change appears in audit log with old/new values.</td>
+</tr>
+<tr>
+<td>FR-1.3</td>
+<td>The system shall generate a unique QR code per asset encoding a resolvable URL/asset ID, and shall support writing/associating an RFID tag ID.</td>
+<td>H</td>
+<td>Scanning the QR opens the correct asset passport; an RFID tag ID cannot be associated with two active assets.</td>
+</tr>
+<tr>
+<td>FR-1.4</td>
+<td>The system shall print QR/RFID labels to supported label printers in configurable templates (size, logo, human-readable ID).</td>
+<td>M</td>
+<td>Label renders correctly on a reference printer at 300 dpi; batch printing of ≥ 100 labels succeeds.</td>
+</tr>
+<tr>
+<td>FR-1.5</td>
+<td>The system shall maintain a <strong>Digital Passport</strong> per asset showing: identity, current status, location, risk class, PM/calibration history, open and closed WOs, spare parts consumed, contracts, attachments (manuals, photos), and lifetime cost.</td>
+<td>H</td>
+<td>All listed sections load on a single asset page; each history entry links to its source record.</td>
+</tr>
+<tr>
+<td>FR-1.6</td>
+<td>The system shall support asset status values: <strong>Operational, In Calibration, Out of Service, Under Maintenance, Decommissioned</strong> (plus system-controlled <strong>Quarantined</strong>, see FR-2.6).</td>
+<td>H</td>
+<td>Only permitted transitions (Section 7.1) are accepted; invalid transitions return an error and are logged.</td>
+</tr>
+<tr>
+<td>FR-1.7</td>
+<td>Status changes shall record actor, timestamp, reason, and linked WO or task, and shall be visible in the passport timeline.</td>
+<td>H</td>
+<td>100% of status changes generate an audit entry with all four fields.</td>
+</tr>
+<tr>
+<td>FR-1.8</td>
+<td>The system shall record asset location and transfers between departments/rooms, and support location update by scanning the asset then the location QR.</td>
+<td>M</td>
+<td>Transfer produces a dated location-history entry; asset search by location reflects the change within 5 seconds.</td>
+</tr>
+<tr>
+<td>FR-1.9</td>
+<td>The system shall support bulk import of assets via CSV/XLSX with validation report and rollback on failure.</td>
+<td>M</td>
+<td>Import of 5,000 rows completes in under 5 minutes; invalid rows are reported with row number and reason; no partial commit unless user selects "import valid rows".</td>
+</tr>
+<tr>
+<td>FR-1.10</td>
+<td>Decommissioning shall require BME Manager approval with e-signature, disposal method and date; decommissioned assets shall retain full history read-only and be excluded from schedules.</td>
+<td>H</td>
+<td>Scheduled tasks for the asset are cancelled; asset can no longer be selected in new WOs.</td>
+</tr>
+<tr>
+<td>FR-1.11</td>
+<td>The system shall maintain a device-model library (templates) containing default risk class, PM/calibration procedures, intervals, checklists and compatible spare parts.</td>
+<td>M</td>
+<td>Creating an asset from a template pre-populates schedule and checklist.</td>
+</tr>
+<tr>
+<td>FR-1.12</td>
+<td>The system shall display recalls/safety notices attached to a model and flag all affected assets by serial-number range.</td>
+<td>L</td>
+<td>Manager can create a notice; affected assets show a banner and appear in a filtered list.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-2-automated-preventive-maintenance-pm-calibration-scheduler">3.2 Automated Preventive Maintenance (PM) &amp; Calibration Scheduler <a class="anc" href="#3-2-automated-preventive-maintenance-pm-calibration-scheduler" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-2.1</td>
+<td>The system shall support configurable PM and calibration intervals per device model and per asset (e.g., monthly, quarterly, semi-annually, annually, or custom days), defaulting from manufacturer guidance and risk category.</td>
+<td>H</td>
+<td>Interval changes require manager approval and justification; changes apply to future tasks only and are audit-logged.</td>
+</tr>
+<tr>
+<td>FR-2.2</td>
+<td>The system shall automatically generate future PM and calibration tasks on a rolling horizon (default 12 months) upon asset activation and after each task completion.</td>
+<td>H</td>
+<td>Completing a task creates the next due task computed from the configured basis (<strong>completion date</strong> or <strong>fixed calendar date</strong>).</td>
+</tr>
+<tr>
+<td>FR-2.3</td>
+<td>The system shall provide a calendar view (day/week/month) and list view of scheduled tasks, filterable by department, risk class, technician, task type and status.</td>
+<td>H</td>
+<td>Filter combinations return results in under 2 seconds for 10,000 tasks.</td>
+</tr>
+<tr>
+<td>FR-2.4</td>
+<td>The system shall send email, SMS and in-app alerts at configurable lead times (default 30, 14, 7 and 1 day before due date) to the assigned BMET and BME Manager.</td>
+<td>H</td>
+<td>Alerts sent within 5 minutes of trigger; delivery status recorded; failed deliveries are retried up to 3 times.</td>
+</tr>
+<tr>
+<td>FR-2.5</td>
+<td>The system shall support a configurable <strong>grace period</strong> per risk category (e.g., Critical: 0 days; High: 3; Medium: 7; Low: 14).</td>
+<td>H</td>
+<td>Task is marked <strong>Overdue</strong> on due date and <strong>Non-Compliant</strong> only after grace expiry.</td>
+</tr>
+<tr>
+<td>FR-2.6</td>
+<td>When the grace period expires without completion, the system shall automatically flag the asset <strong>Non-Compliant / Quarantine</strong>, notify the BME Manager and the owning department head, and display a "Do Not Use" banner on the asset page and on QR scan.</td>
+<td>H</td>
+<td>Status changes automatically within 5 minutes of grace expiry; scanning the QR shows a red "Do Not Use" screen; event is audit-logged.</td>
+</tr>
+<tr>
+<td>FR-2.7</td>
+<td>Release from quarantine shall require completion of the overdue task with passing results and sign-off, or a documented <strong>temporary override</strong> by a BME Manager with e-signature, reason, and maximum duration (default 72 hours) after which the asset re-quarantines automatically.</td>
+<td>H</td>
+<td>Override cannot be applied without e-signature; expiry re-quarantines automatically; all steps are audit-logged.</td>
+</tr>
+<tr>
+<td>FR-2.8</td>
+<td>The scheduler shall support rescheduling with reason codes and shall report reschedule frequency as a compliance metric.</td>
+<td>M</td>
+<td>Rescheduling beyond grace-adjusted due date is blocked or converts to a documented deviation.</td>
+</tr>
+<tr>
+<td>FR-2.9</td>
+<td>The scheduler shall support workload balancing suggestions by technician skill, department and daily capacity.</td>
+<td>L</td>
+<td>Suggested assignments respect skill tags and do not exceed configured daily task capacity.</td>
+</tr>
+<tr>
+<td>FR-2.10</td>
+<td>The scheduler shall support grouping of tasks by location or department to enable batch rounds.</td>
+<td>M</td>
+<td>Manager can generate a "round" of ≥ 20 tasks for one ward in a single action.</td>
+</tr>
+<tr>
+<td>FR-2.11</td>
+<td>The system shall support <strong>condition-triggered</strong> tasks (e.g., after repair, relocation, or usage-hour threshold entered manually) in addition to time-based tasks.</td>
+<td>M</td>
+<td>Completing a corrective WO for defined failure classes auto-creates a post-repair verification task.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-3-breakdown-work-order-ticketing-system">3.3 Breakdown Work Order &amp; Ticketing System <a class="anc" href="#3-3-breakdown-work-order-ticketing-system" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-3.1</td>
+<td>Hospital staff shall be able to raise a breakdown ticket by scanning the asset QR or searching, entering fault description, urgency (<strong>Critical, High, Normal, Low</strong>), and up to 5 photos (≤ 10 MB each).</td>
+<td>H</td>
+<td>Ticket can be created from mobile in ≤ 60 seconds with 3 inputs (scan, description, urgency); confirmation with ticket number displayed.</td>
+</tr>
+<tr>
+<td>FR-3.2</td>
+<td>The system shall auto-assign the ticket to an available BMET based on department coverage, device specialty/skill tags, current workload, and shift/availability.</td>
+<td>H</td>
+<td>Assignment occurs within 60 seconds; if no eligible BMET, ticket escalates to BME Manager.</td>
+</tr>
+<tr>
+<td>FR-3.3</td>
+<td>Critical-urgency tickets on life-support devices shall trigger immediate push/SMS notification and automatic status change of the asset to <strong>Out of Service</strong> pending assessment.</td>
+<td>H</td>
+<td>Notification received by assignee and manager within 60 seconds; asset banner shows "Out of Service".</td>
+</tr>
+<tr>
+<td>FR-3.4</td>
+<td>WO statuses shall be: <strong>Open, In Progress, Pending Spare Parts, Completed, Verified</strong> (plus Cancelled and Rejected with reason). Only permitted transitions are allowed (Section 7.2).</td>
+<td>H</td>
+<td>Illegal transitions are blocked; every transition audit-logged with actor and time.</td>
+</tr>
+<tr>
+<td>FR-3.5</td>
+<td>Closing a WO as <strong>Completed</strong> shall require: fault cause code, action taken, parts used, labour hours, and post-repair functional/safety check result.</td>
+<td>H</td>
+<td>Mandatory fields enforced; incomplete closure rejected.</td>
+</tr>
+<tr>
+<td>FR-3.6</td>
+<td><strong>Verified</strong> status shall require sign-off by a user different from the executing BMET (four-eyes principle), e-signed for Critical and High risk devices.</td>
+<td>H</td>
+<td>System rejects verification by the same user who completed the WO.</td>
+</tr>
+<tr>
+<td>FR-3.7</td>
+<td>The system shall track SLA timers (response, restoration) per urgency, and escalate automatically upon breach risk (e.g., at 75% of SLA) and breach.</td>
+<td>H</td>
+<td>Escalation notifications are sent to configured recipients; SLA breach flagged on dashboard.</td>
+</tr>
+<tr>
+<td>FR-3.8</td>
+<td>The requester shall be able to view live ticket status and receive notifications on each status change.</td>
+<td>M</td>
+<td>Status change reflected in requester view within 10 seconds of transition.</td>
+</tr>
+<tr>
+<td>FR-3.9</td>
+<td>The system shall support WO comments, attachments and internal notes visible only to BME roles.</td>
+<td>M</td>
+<td>Internal notes are hidden from Requester role (verified by RBAC test).</td>
+</tr>
+<tr>
+<td>FR-3.10</td>
+<td>The system shall detect <strong>repeat failures</strong> (≥ 3 breakdown WOs within a configurable window on the same asset) and flag the asset for replacement review.</td>
+<td>M</td>
+<td>Flag appears on the asset and in manager report; threshold is configurable.</td>
+</tr>
+<tr>
+<td>FR-3.11</td>
+<td>The system shall compute MTBF, MTTR, downtime hours and repair cost per asset, model, and department.</td>
+<td>M</td>
+<td>Computed values reconcile to WO records in a validation dataset within ±0.1%.</td>
+</tr>
+<tr>
+<td>FR-3.12</td>
+<td>Loaner/replacement equipment shall be assignable to a WO with location tracking and return confirmation.</td>
+<td>L</td>
+<td>Loaner asset status and location update on assign and return.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-4-calibration-execution-certificate-management">3.4 Calibration Execution &amp; Certificate Management <a class="anc" href="#3-4-calibration-execution-certificate-management" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-4.1</td>
+<td>The system shall provide digital calibration forms per device model/procedure, defining test points, nominal values, units, tolerances (absolute and/or % of reading), and pass/fail rules.</td>
+<td>H</td>
+<td>Forms are versioned; the version used is stored with each record.</td>
+</tr>
+<tr>
+<td>FR-4.2</td>
+<td>During execution, the system shall calculate deviation and <strong>automatically evaluate pass/fail</strong> for each test point against defined thresholds, and compute overall result.</td>
+<td>H</td>
+<td>For a validation set of ≥ 100 test cases, automated evaluation matches manual computation with 100% agreement.</td>
+</tr>
+<tr>
+<td>FR-4.3</td>
+<td>The technician shall select each reference standard used. The system shall verify that each standard is <strong>within calibration validity</strong> (expiry date, certificate on file) and block sign-off if any is expired, quarantined or not valid for the measurement range.</td>
+<td>H</td>
+<td>Attempt to use an expired standard shows a blocking error; override is not permitted.</td>
+</tr>
+<tr>
+<td>FR-4.4</td>
+<td>The system shall record ambient conditions (temperature, humidity where required), technician ID, date/time, UUT "as-found" and "as-left" values, and adjustments made.</td>
+<td>H</td>
+<td>As-found and as-left are stored separately and both appear in the certificate.</td>
+</tr>
+<tr>
+<td>FR-4.5</td>
+<td>The system shall evaluate <strong>TUR/TAR</strong> where the reference standard's accuracy/uncertainty is recorded, and warn if below the configured minimum (default 4:1).</td>
+<td>M</td>
+<td>Warning is displayed and recorded when TUR &lt; threshold.</td>
+</tr>
+<tr>
+<td>FR-4.6</td>
+<td>A failed (out-of-tolerance) calibration shall automatically set the asset to <strong>Out of Service</strong>, create a corrective WO, and, where configured, generate an out-of-tolerance impact notification listing prior calibration period and clinical department.</td>
+<td>H</td>
+<td>Asset status and WO created within 60 seconds of submitting failed result.</td>
+</tr>
+<tr>
+<td>FR-4.7</td>
+<td>Sign-off shall require <strong>e-signature</strong> compliant with 21 CFR Part 11: re-authentication (user ID + password, or MFA), display of printed name, date/time (UTC and local), and signature meaning (e.g., <em>Performed by</em>, <em>Reviewed by</em>, <em>Approved by</em>).</td>
+<td>H</td>
+<td>Signature manifests on record and certificate; signature cannot be copied or reused; failed authentication is logged.</td>
+</tr>
+<tr>
+<td>FR-4.8</td>
+<td>Signed calibration records shall be locked; corrections shall only occur via a new, linked, e-signed <strong>amendment record</strong> with reason, preserving the original.</td>
+<td>H</td>
+<td>Attempt to edit signed record is blocked; amendment shows both versions side by side.</td>
+</tr>
+<tr>
+<td>FR-4.9</td>
+<td>The system shall auto-generate a <strong>PDF calibration certificate</strong> containing: certificate number, asset identity, procedure/version, reference standards and their traceability codes/certificate numbers, results tables, uncertainty (where applicable), conditions, signatures, next due date, and a verification QR code/hash.</td>
+<td>H</td>
+<td>PDF/A-2 generated in under 10 seconds; hash printed on certificate matches stored hash; QR verification page confirms authenticity.</td>
+</tr>
+<tr>
+<td>FR-4.10</td>
+<td>Certificates shall be stored in write-once (WORM) object storage and linked to the asset passport.</td>
+<td>H</td>
+<td>Stored object cannot be modified or deleted before retention expiry.</td>
+</tr>
+<tr>
+<td>FR-4.11</td>
+<td>The system shall maintain a <strong>Reference Standards register</strong> (ID, type, range, accuracy, certificate number, calibrating lab and its accreditation, calibration date, due date), with its own scheduler and quarantine logic.</td>
+<td>H</td>
+<td>An expired standard is auto-quarantined; a report lists all records made with a standard that later failed calibration.</td>
+</tr>
+<tr>
+<td>FR-4.12</td>
+<td>External vendor calibrations shall be recordable by uploading vendor certificates and entering key results, subject to internal review and e-signature approval.</td>
+<td>M</td>
+<td>Vendor certificate must be attached and reviewed before asset status returns to Operational.</td>
+</tr>
+<tr>
+<td>FR-4.13</td>
+<td>The system shall support electrical safety testing records per IEC 62353 (e.g., protective earth resistance, leakage currents) using configurable forms.</td>
+<td>M</td>
+<td>Test limits configurable per device class; pass/fail computed automatically.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-5-spare-parts-inventory-tracking">3.5 Spare Parts &amp; Inventory Tracking <a class="anc" href="#3-5-spare-parts-inventory-tracking" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-5.1</td>
+<td>The system shall maintain a spare parts catalog (part number, description, category, unit, supplier, unit cost) linked to compatible device models.</td>
+<td>H</td>
+<td>A part can be linked to multiple models; WO part selector filters by asset model.</td>
+</tr>
+<tr>
+<td>FR-5.2</td>
+<td>The system shall track stock by storeroom/location and lot/serial (where applicable) and support receipts, issues, transfers and adjustments.</td>
+<td>H</td>
+<td>Stock balance equals sum of transactions; negative stock is blocked.</td>
+</tr>
+<tr>
+<td>FR-5.3</td>
+<td>Parts consumed on a WO/PM shall be recorded against the WO and asset, automatically decrementing stock.</td>
+<td>H</td>
+<td>Closing a WO with parts reduces stock exactly once; reversal only via adjustment entry.</td>
+</tr>
+<tr>
+<td>FR-5.4</td>
+<td>The system shall define minimum/reorder levels and generate <strong>low-stock alerts</strong> to the BME Manager/store keeper.</td>
+<td>H</td>
+<td>Alert triggers when quantity ≤ reorder level; one alert per crossing until replenished.</td>
+</tr>
+<tr>
+<td>FR-5.5</td>
+<td>The system shall support expiry tracking for perishable items (batteries, sensors, seals) with alerts before expiry.</td>
+<td>M</td>
+<td>Items within configurable window appear on the expiry report; expired stock is blocked from issue.</td>
+</tr>
+<tr>
+<td>FR-5.6</td>
+<td>A WO in <strong>Pending Spare Parts</strong> status shall record required part and expected date, and auto-notify the assignee when stock is received.</td>
+<td>M</td>
+<td>Receipt of the linked part triggers notification within 5 minutes.</td>
+</tr>
+<tr>
+<td>FR-5.7</td>
+<td>The system shall provide part usage history and consumption reports by part, model, department and period.</td>
+<td>M</td>
+<td>Report exports to CSV/XLSX and matches transaction ledger.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-6-vendor-service-contract-amccmc-management">3.6 Vendor &amp; Service Contract (AMC/CMC) Management <a class="anc" href="#3-6-vendor-service-contract-amccmc-management" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-6.1</td>
+<td>The system shall maintain a vendor directory (company, contacts, escalation matrix, accreditation status, documents).</td>
+<td>H</td>
+<td>Vendor record stores multiple contacts with roles and phone/email.</td>
+</tr>
+<tr>
+<td>FR-6.2</td>
+<td>The system shall record AMC/CMC contracts (type, coverage scope, covered assets, start/end, cost, payment terms, inclusions/exclusions, response and uptime SLAs, attached document).</td>
+<td>H</td>
+<td>One contract can cover many assets; an asset shows its active contract on the passport.</td>
+</tr>
+<tr>
+<td>FR-6.3</td>
+<td>The system shall notify managers at configurable intervals (default 90, 60, 30 days) before contract and warranty expiry.</td>
+<td>H</td>
+<td>Notifications generated on schedule; expired items appear on a dashboard widget.</td>
+</tr>
+<tr>
+<td>FR-6.4</td>
+<td>The system shall track vendor service response and resolution times against SLA for vendor-assigned WOs and compute a vendor performance score.</td>
+<td>M</td>
+<td>Scorecard shows SLA adherence %, average response time, and repeat-visit rate per vendor.</td>
+</tr>
+<tr>
+<td>FR-6.5</td>
+<td>The system shall flag whether a breakdown is <strong>under warranty/contract</strong> at WO creation and route to the responsible vendor when configured.</td>
+<td>M</td>
+<td>WO shows coverage badge; vendor auto-notified by email with WO details.</td>
+</tr>
+<tr>
+<td>FR-6.6</td>
+<td>The system shall provide a scoped, time-limited <strong>vendor portal</strong> to view assigned WOs, upload service reports and calibration certificates, without access to other data.</td>
+<td>M</td>
+<td>Vendor user sees only their assigned records (verified by RBAC test).</td>
+</tr>
+<tr>
+<td>FR-6.7</td>
+<td>The system shall provide contract cost analytics (contract cost vs. actual repair cost per asset/model) to support renewal decisions.</td>
+<td>L</td>
+<td>Report displays cost comparison for a selected period.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-7-audit-trail-reporting-regulatory-compliance-dashboard">3.7 Audit Trail, Reporting &amp; Regulatory Compliance Dashboard <a class="anc" href="#3-7-audit-trail-reporting-regulatory-compliance-dashboard" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+<th>Acceptance Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-7.1</td>
+<td>The system shall record a <strong>100% immutable audit trail</strong> of all create/update/delete, status change, calibration, sign-off, login/logout, permission change and configuration change events, capturing: actor, role, UTC timestamp, event type, object ID, old value, new value, reason, client IP and device.</td>
+<td>H</td>
+<td>Audit entries cannot be edited or deleted by any role, including System Administrator; hash-chain verification passes on demand.</td>
+</tr>
+<tr>
+<td>FR-7.2</td>
+<td>The audit store shall be tamper-evident using cryptographic hash chaining and periodic anchoring (e.g., daily digest stored in separate WORM storage).</td>
+<td>H</td>
+<td>Any tampering test (row modification/deletion) is detected by the integrity check job.</td>
+</tr>
+<tr>
+<td>FR-7.3</td>
+<td>Users with Auditor or Manager role shall be able to search and filter the audit trail by user, asset, date range, event type and export as PDF/CSV.</td>
+<td>H</td>
+<td>Search over 10 million entries returns first page in under 3 seconds.</td>
+</tr>
+<tr>
+<td>FR-7.4</td>
+<td>The <strong>Compliance Dashboard</strong> shall display: PM compliance %, calibration compliance %, overdue and quarantined counts, WO SLA adherence, MTBF/MTTR, and contract expiries, filterable by department, risk class and period.</td>
+<td>H</td>
+<td>Figures reconcile to source records; example: PM compliance = tasks completed on/before due (or within grace) ÷ tasks due in period.</td>
+</tr>
+<tr>
+<td>FR-7.5</td>
+<td>The system shall provide <strong>one-click compliance report</strong> generation for NABH, JCI, ISO 13485 and FDA audit templates, including asset inventory, PM/calibration evidence, deviations, CAPA references and signature manifests.</td>
+<td>H</td>
+<td>Report for 5,000 assets generated in under 60 seconds; every figure hyperlinks to its supporting records.</td>
+</tr>
+<tr>
+<td>FR-7.6</td>
+<td>The system shall show a colour-coded compliance status (green/yellow/red) for each asset and aggregate by department.</td>
+<td>H</td>
+<td>Colour rules configurable; default matches Section 4.1.</td>
+</tr>
+<tr>
+<td>FR-7.7</td>
+<td>The system shall support scheduled report delivery (daily/weekly/monthly) by email in PDF/XLSX.</td>
+<td>M</td>
+<td>Scheduled report sent within 15 minutes of schedule; delivery logged.</td>
+</tr>
+<tr>
+<td>FR-7.8</td>
+<td>The system shall support deviation and CAPA references, allowing a WO, calibration failure or audit finding to be linked to a CAPA record ID (internal or external QMS).</td>
+<td>M</td>
+<td>Linked CAPA appears on the asset timeline and in reports.</td>
+</tr>
+<tr>
+<td>FR-7.9</td>
+<td>The system shall provide an <strong>auditor read-only mode</strong> with time-boxed accounts and watermarking of exported evidence.</td>
+<td>M</td>
+<td>Auditor accounts expire automatically; exported files show user, date and watermark.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-external-interface-requirements">4. External Interface Requirements <a class="anc" href="#4-external-interface-requirements" aria-label="Link">#</a></h2>
+<h3 id="4-1-user-interfaces">4.1 User Interfaces <a class="anc" href="#4-1-user-interfaces" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UI-1</td>
+<td>The dashboard shall use a high-contrast design conforming to WCAG 2.1 AA, with status shown by <strong>colour plus icon/text</strong> (not colour alone).</td>
+</tr>
+<tr>
+<td>UI-2</td>
+<td>Status colours: <strong>Green</strong> = Calibrated / Compliant; <strong>Yellow</strong> = PM/Calibration due soon (within configurable window, default 14 days) or in grace period; <strong>Red</strong> = Uncalibrated / Non-Compliant / Quarantined; <strong>Grey</strong> = Decommissioned / Out of Service (administrative).</td>
+</tr>
+<tr>
+<td>UI-3</td>
+<td>The QR scan result screen shall show device identity, status colour, next due date, and a single primary action (Report fault / Start task) with tap targets ≥ 48 px.</td>
+</tr>
+<tr>
+<td>UI-4</td>
+<td>The mobile app shall support one-handed operation, dark mode, and glove-friendly touch sizing.</td>
+</tr>
+<tr>
+<td>UI-5</td>
+<td>The UI shall support English initially, with externalized strings for localization (e.g., Tamil, Hindi) and locale-aware dates/numbers.</td>
+</tr>
+<tr>
+<td>UI-6</td>
+<td>Destructive or state-changing actions (quarantine override, decommission, sign-off) shall require explicit confirmation dialogs stating consequences.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="4-2-hardware-interfaces">4.2 Hardware Interfaces <a class="anc" href="#4-2-hardware-interfaces" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HW-1</td>
+<td>The mobile app shall use the device camera to scan QR codes and 1D/2D barcodes (Code 128, Data Matrix, GS1) in low light with torch support; scan-to-result under 1.5 seconds (see NFR-1.1).</td>
+</tr>
+<tr>
+<td>HW-2</td>
+<td>The system shall integrate with handheld Bluetooth (HID/SPP) RFID/barcode scanners, and support HF/UHF RFID tags (ISO 15693, ISO 18000-63/EPC Gen2).</td>
+</tr>
+<tr>
+<td>HW-3</td>
+<td>The system shall print labels via network or Bluetooth label printers supporting ZPL/TSPL/PDF; label templates shall be configurable.</td>
+</tr>
+<tr>
+<td>HW-4</td>
+<td>The mobile app shall support optional attachment of photos captured by the camera, with automatic compression and timestamp/geolocation metadata (geolocation opt-in).</td>
+</tr>
+<tr>
+<td>HW-5</td>
+<td>The system may accept structured result import from calibrators/analysers via CSV/file upload (no direct device driver control in v1.0).</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="4-3-software-interfaces">4.3 Software Interfaces <a class="anc" href="#4-3-software-interfaces" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Interface</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SW-1</td>
+<td><strong>Public REST API</strong></td>
+<td>JSON over HTTPS, OpenAPI 3.x documented, versioned (<code>/api/v1</code>), OAuth 2.0/OIDC bearer tokens, pagination and idempotency keys for write operations.</td>
+</tr>
+<tr>
+<td>SW-2</td>
+<td><strong>HIS Integration</strong></td>
+<td>Inbound: department/location/staff master data via REST or HL7 v2 (ADT-free; no patient data ingested). Outbound: asset status changes (e.g., quarantine) to HIS as webhook/HL7 message. FHIR <code>Device</code> resource mapping supported as optional.</td>
+</tr>
+<tr>
+<td>SW-3</td>
+<td><strong>Identity Provider</strong></td>
+<td>SAML 2.0 / OIDC SSO (e.g., Azure AD, Okta); SCIM 2.0 optional for provisioning.</td>
+</tr>
+<tr>
+<td>SW-4</td>
+<td><strong>Cloud Object Storage</strong></td>
+<td>S3-compatible API for certificates, photos, attachments; object lock (WORM) for regulated records.</td>
+</tr>
+<tr>
+<td>SW-5</td>
+<td><strong>Notification Gateways</strong></td>
+<td>SMTP/API email; SMS via configurable provider; push via FCM/APNs.</td>
+</tr>
+<tr>
+<td>SW-6</td>
+<td><strong>Export Interfaces</strong></td>
+<td>CSV/XLSX/PDF exports; accounting/ERP export via scheduled file or API.</td>
+</tr>
+<tr>
+<td>SW-7</td>
+<td><strong>Webhooks</strong></td>
+<td>Event subscriptions for <code>asset.status_changed</code>, <code>wo.created</code>, <code>calibration.signed</code>, <code>task.overdue</code>; HMAC-signed payloads with retry and dead-letter queue.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="4-4-communications-interfaces">4.4 Communications Interfaces <a class="anc" href="#4-4-communications-interfaces" aria-label="Link">#</a></h3>
+<ul>
+<li>All external communication shall use HTTPS (TLS 1.3, TLS 1.2 as fallback only where a documented integration constraint exists).</li>
+<li>Mobile sync shall use delta synchronization with compression, resumable uploads, and conflict resolution (Section 5.1).</li>
+</ul>
+<hr />
+<h2 id="5-non-functional-requirements">5. Non-Functional Requirements <a class="anc" href="#5-non-functional-requirements" aria-label="Link">#</a></h2>
+<h3 id="5-1-performance">5.1 Performance <a class="anc" href="#5-1-performance" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Measure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-1.1</td>
+<td>Search and QR-code lookup shall return the asset passport summary in <strong>&lt; 1.5 s</strong> (95th percentile) under nominal load on 4G.</td>
+<td>APM/synthetic tests</td>
+</tr>
+<tr>
+<td>NFR-1.2</td>
+<td>Standard page loads shall complete in &lt; 3 s (95th percentile); API reads &lt; 500 ms, writes &lt; 1 s (95th percentile).</td>
+<td>Load tests</td>
+</tr>
+<tr>
+<td>NFR-1.3</td>
+<td>The system shall support 500 concurrent users and 100,000 assets per tenant with no degradation beyond stated targets; horizontally scalable to 5,000 concurrent users.</td>
+<td>Load/soak testing</td>
+</tr>
+<tr>
+<td>NFR-1.4</td>
+<td>The mobile app shall provide <strong>offline mode</strong>: view assigned tasks/assets (cached), execute PM/calibration forms, create tickets, capture photos, and sign preliminary results offline; data shall sync automatically on reconnect.</td>
+<td>Field test with airplane mode</td>
+</tr>
+<tr>
+<td>NFR-1.5</td>
+<td>Offline sync shall use conflict rules: server-authoritative for status/state transitions, last-writer-wins with field-level merge for notes, and manual review queue for conflicting calibration data. Zero silent data loss.</td>
+<td>Sync test suite</td>
+</tr>
+<tr>
+<td>NFR-1.6</td>
+<td>Offline cache shall hold at least 7 days of assigned work (≈ 500 assets) within 300 MB, encrypted on device.</td>
+<td>Device test</td>
+</tr>
+<tr>
+<td>NFR-1.7</td>
+<td>Alert generation latency &lt; 5 minutes from trigger; report generation per FR-7.5 &lt; 60 s.</td>
+<td>Monitoring</td>
+</tr>
+<tr>
+<td>NFR-1.8</td>
+<td>Final Part 11 e-signatures applied offline shall be marked provisional and become effective only after server-side re-authentication on sync.</td>
+<td>Security/validation test</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="5-2-security">5.2 Security <a class="anc" href="#5-2-security" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-2.1</td>
+<td><strong>RBAC</strong>: least-privilege roles (BMET, BME Manager, Requester, Vendor/Auditor, System Admin) with permission matrix per Appendix 8.3; department-level data scoping.</td>
+</tr>
+<tr>
+<td>NFR-2.2</td>
+<td>Authentication: SSO or local accounts with password policy (≥ 12 characters, breach-list check), MFA for privileged roles and for all e-signatures; account lock after 5 failed attempts.</td>
+</tr>
+<tr>
+<td>NFR-2.3</td>
+<td>Encryption in transit: <strong>TLS 1.3</strong>; HSTS; certificate pinning in mobile apps.</td>
+</tr>
+<tr>
+<td>NFR-2.4</td>
+<td>Encryption at rest: <strong>AES-256</strong> for database, object storage, backups and mobile local cache; keys managed in KMS/HSM with annual rotation.</td>
+</tr>
+<tr>
+<td>NFR-2.5</td>
+<td>Digital signatures: certificate PDFs shall be hashed (SHA-256 or stronger) and optionally digitally signed (PAdES) with organization key.</td>
+</tr>
+<tr>
+<td>NFR-2.6</td>
+<td>Session management: idle timeout ≤ 15 minutes (configurable), absolute timeout 12 hours, token revocation on logout/role change.</td>
+</tr>
+<tr>
+<td>NFR-2.7</td>
+<td>Secure development: OWASP ASVS L2 conformity; SAST/DAST/dependency scans in CI; annual third-party penetration test; no critical/high unresolved findings at release.</td>
+</tr>
+<tr>
+<td>NFR-2.8</td>
+<td>Multi-tenancy: strict tenant isolation validated by automated tests; tenant-specific encryption keys optional.</td>
+</tr>
+<tr>
+<td>NFR-2.9</td>
+<td>Rate limiting, input validation, and protection against injection, XSS, CSRF, SSRF and IDOR.</td>
+</tr>
+<tr>
+<td>NFR-2.10</td>
+<td>Security event monitoring with alerting to SIEM; incident response plan with 72-hour breach notification workflow.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="5-3-reliability-availability">5.3 Reliability &amp; Availability <a class="anc" href="#5-3-reliability-availability" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-3.1</td>
+<td>Availability of <strong>99.9%</strong> monthly (≈ 43 minutes downtime/month), excluding announced maintenance windows (≤ 4 hours/month, off-peak).</td>
+</tr>
+<tr>
+<td>NFR-3.2</td>
+<td><strong>Automated daily database backups</strong> with point-in-time recovery; retained 35 days (operational) and per retention policy for archives; backups encrypted and stored in a separate region.</td>
+</tr>
+<tr>
+<td>NFR-3.3</td>
+<td>RPO ≤ 15 minutes; RTO ≤ 4 hours; disaster recovery drill at least semi-annually with documented results.</td>
+</tr>
+<tr>
+<td>NFR-3.4</td>
+<td>Backup restore tested at least quarterly and after major releases.</td>
+</tr>
+<tr>
+<td>NFR-3.5</td>
+<td>Graceful degradation: if notification or HIS integrations fail, core workflows continue and events queue for retry.</td>
+</tr>
+<tr>
+<td>NFR-3.6</td>
+<td>Zero data loss for committed transactions; exactly-once processing for scheduler-generated tasks and alerts.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="5-4-maintainability-compliance">5.4 Maintainability &amp; Compliance <a class="anc" href="#5-4-maintainability-compliance" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-4.1</td>
+<td>Risk metrics, calibration intervals, grace periods, alert lead times, form templates, status colours and SLA thresholds shall be <strong>configurable through the admin UI without code changes</strong>, under change control with audit logging.</td>
+</tr>
+<tr>
+<td>NFR-4.2</td>
+<td>Modular service architecture with documented APIs; automated test coverage ≥ 80% for core business logic and 100% for e-signature, audit and scheduling rules.</td>
+</tr>
+<tr>
+<td>NFR-4.3</td>
+<td>Release management: semantic versioning, validated release packages, release notes with impact assessment, and regression validation evidence supplied per release (supports customer revalidation).</td>
+</tr>
+<tr>
+<td>NFR-4.4</td>
+<td>Complete validation documentation set: URS-to-test traceability (Appendix 8.2), IQ/OQ/PQ protocols, risk assessment (ISO 14971-style hazard analysis for records integrity), and periodic review.</td>
+</tr>
+<tr>
+<td>NFR-4.5</td>
+<td>Zero-downtime schema migrations where feasible; backward-compatible APIs for at least 12 months after deprecation notice.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="5-5-usability">5.5 Usability <a class="anc" href="#5-5-usability" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-5.1</td>
+<td>A new BMET shall be able to complete a guided calibration with ≤ 30 minutes of training (validated in usability testing with ≥ 5 users; task success ≥ 90%).</td>
+</tr>
+<tr>
+<td>NFR-5.2</td>
+<td>A requester shall raise a ticket within 60 seconds without training.</td>
+</tr>
+<tr>
+<td>NFR-5.3</td>
+<td>Accessibility: WCAG 2.1 AA on web; platform accessibility features on mobile.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="6-data-requirements-security-constraints">6. Data Requirements &amp; Security Constraints <a class="anc" href="#6-data-requirements-security-constraints" aria-label="Link">#</a></h2>
+<h3 id="6-1-logical-data-entities">6.1 Logical Data Entities <a class="anc" href="#6-1-logical-data-entities" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Key Attributes</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Asset</strong></td>
+<td>asset_id, model_id, serial_no, udi, dept_id, location_id, risk_class, status, purchase_date, warranty_end, qr_code, rfid_tag</td>
+<td>Unique (manufacturer, serial_no)</td>
+</tr>
+<tr>
+<td><strong>DeviceModel</strong></td>
+<td>model_id, manufacturer, name, default_risk, default_intervals, procedure_ids</td>
+<td>Template</td>
+</tr>
+<tr>
+<td><strong>Task (PM/Cal)</strong></td>
+<td>task_id, asset_id, type, due_date, grace_end, assignee, status, procedure_version</td>
+<td>Generated by scheduler</td>
+</tr>
+<tr>
+<td><strong>CalibrationRecord</strong></td>
+<td>record_id, task_id, form_version, as_found[], as_left[], result, conditions, signatures[], certificate_id</td>
+<td>Locked once signed</td>
+</tr>
+<tr>
+<td><strong>ReferenceStandard</strong></td>
+<td>std_id, type, range, accuracy, cert_no, lab, cal_date, due_date, status</td>
+<td>Has own schedule</td>
+</tr>
+<tr>
+<td><strong>WorkOrder</strong></td>
+<td>wo_id, asset_id, requester, urgency, status, cause_code, action, labour_hrs, sla_targets, verified_by</td>
+<td>Four-eyes verification</td>
+</tr>
+<tr>
+<td><strong>SparePart / StockTxn</strong></td>
+<td>part_no, model_links[], qty, location, lot, expiry, txn_type, wo_id</td>
+<td>Ledger-based</td>
+</tr>
+<tr>
+<td><strong>Contract / Vendor</strong></td>
+<td>contract_id, vendor_id, type (AMC/CMC), start, end, sla, covered_assets[]</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>User / Role / Department</strong></td>
+<td>user_id, role, dept_scope, mfa_status</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AuditEvent</strong></td>
+<td>event_id, ts_utc, actor, event_type, object_ref, old, new, reason, ip, prev_hash, hash</td>
+<td>Append-only</td>
+</tr>
+<tr>
+<td><strong>Attachment</strong></td>
+<td>file_id, checksum, storage_uri, retention_until</td>
+<td>WORM for regulated</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="6-2-data-retention-and-integrity">6.2 Data Retention and Integrity <a class="anc" href="#6-2-data-retention-and-integrity" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DR-1</td>
+<td>Calibration records, certificates, audit logs and WO records shall be retained for the <strong>device lifetime plus a minimum of 5 years</strong> (configurable per jurisdiction; e.g., longer where local regulation requires), and never deleted before the retention date.</td>
+</tr>
+<tr>
+<td>DR-2</td>
+<td>Records shall follow <strong>ALCOA+</strong> principles: attributable, legible, contemporaneous, original, accurate, complete, consistent, enduring, available.</td>
+</tr>
+<tr>
+<td>DR-3</td>
+<td>Referential integrity shall be enforced at database level; soft-delete only for regulated entities.</td>
+</tr>
+<tr>
+<td>DR-4</td>
+<td>Time source synchronization via NTP with drift alarms; server time is authoritative for signatures.</td>
+</tr>
+<tr>
+<td>DR-5</td>
+<td>Data export/portability: complete tenant export in open formats (CSV/JSON + PDFs) on request within 7 days; verified hash manifest provided.</td>
+</tr>
+<tr>
+<td>DR-6</td>
+<td>Test and training environments shall use synthetic or de-identified data only.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="6-3-security-and-privacy-constraints">6.3 Security and Privacy Constraints <a class="anc" href="#6-3-security-and-privacy-constraints" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SC-1</td>
+<td><strong>PHI/PII separation:</strong> the system shall not store patient identifiers. Free-text fields shall carry a warning and pattern-based detection (e.g., MRN/phone/ID patterns) to prevent accidental entry; flagged entries require redaction. Staff personal data is minimized to name, role, work contact.</td>
+</tr>
+<tr>
+<td>SC-2</td>
+<td>Audit trails shall be immutable to all users including administrators; administrative actions shall be dual-logged and reviewed.</td>
+</tr>
+<tr>
+<td>SC-3</td>
+<td>Electronic signature records shall be inextricably linked to their records (11.70), and signers shall certify the equivalence of e-signatures to handwritten ones (11.100(c)) per organization policy.</td>
+</tr>
+<tr>
+<td>SC-4</td>
+<td>Privileged access (production database/infrastructure) shall use just-in-time access, session recording, and approval workflow; no shared accounts.</td>
+</tr>
+<tr>
+<td>SC-5</td>
+<td>Data residency: tenant data stored and processed in the region selected at onboarding; cross-region transfers only for encrypted backups within the approved jurisdiction.</td>
+</tr>
+<tr>
+<td>SC-6</td>
+<td>Privacy compliance: support for access, correction and deletion requests for staff personal data where not in conflict with retention obligations (e.g., pseudonymization instead of deletion for regulated records).</td>
+</tr>
+<tr>
+<td>SC-7</td>
+<td>Vulnerability disclosure and patch SLA: critical fixes within 7 days, high within 30 days.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="7-system-models-data-flow">7. System Models &amp; Data Flow <a class="anc" href="#7-system-models-data-flow" aria-label="Link">#</a></h2>
+<h3 id="7-1-asset-status-state-model">7.1 Asset Status State Model <a class="anc" href="#7-1-asset-status-state-model" aria-label="Link">#</a></h3>
+<pre class="mermaid">stateDiagram-v2
+    [*] --&gt; Operational: Commissioned &amp; acceptance test passed
+    Operational --&gt; InCalibration: Calibration task started
+    Operational --&gt; UnderMaintenance: PM / repair started
+    Operational --&gt; OutOfService: Critical fault / failed calibration
+    Operational --&gt; Quarantined: Grace period expired (auto)
+    InCalibration --&gt; Operational: Pass + e-signed
+    InCalibration --&gt; OutOfService: Fail
+    UnderMaintenance --&gt; Operational: WO Verified
+    UnderMaintenance --&gt; OutOfService: Repair not feasible yet
+    OutOfService --&gt; UnderMaintenance: Repair started
+    Quarantined --&gt; InCalibration: Overdue calibration started
+    Quarantined --&gt; UnderMaintenance: Overdue PM started
+    Quarantined --&gt; Operational: Manager override (time-boxed, e-signed)
+    Operational --&gt; Decommissioned: Manager approval (e-signed)
+    OutOfService --&gt; Decommissioned: Manager approval (e-signed)
+    Decommissioned --&gt; [*]
+</pre>
+<h3 id="7-2-work-order-lifecycle">7.2 Work Order Lifecycle <a class="anc" href="#7-2-work-order-lifecycle" aria-label="Link">#</a></h3>
+<pre class="mermaid">stateDiagram-v2
+    [*] --&gt; Open: Ticket raised
+    Open --&gt; InProgress: BMET accepts
+    InProgress --&gt; PendingSpareParts: Part required
+    PendingSpareParts --&gt; InProgress: Part received
+    InProgress --&gt; Completed: Fix + functional check recorded
+    Completed --&gt; Verified: Independent sign-off
+    Completed --&gt; InProgress: Verification failed
+    Open --&gt; Cancelled: Requester/Manager cancels with reason
+    Open --&gt; Rejected: Not a fault (reason)
+    Verified --&gt; [*]
+</pre>
+<h3 id="7-3-context-data-flow-level-0">7.3 Context / Data Flow (Level 0) <a class="anc" href="#7-3-context-data-flow-level-0" aria-label="Link">#</a></h3>
+<pre class="mermaid">flowchart LR
+    NUR[Ward Staff / Requester] --&gt;|Fault ticket, QR scan| SYS((MedEquipTrack))
+    BMET[BMET Mobile App] --&gt;|Task execution, readings, e-sign| SYS
+    MGR[BME Manager] --&gt;|Approvals, config, overrides| SYS
+    VEN[Vendor / Auditor Portal] --&gt;|Certificates, service reports| SYS
+    HIS[HIS] --&gt;|Departments, locations, staff| SYS
+    SYS --&gt;|Status events| HIS
+    SYS --&gt;|Alerts: Email/SMS/Push| NUR
+    SYS --&gt;|Alerts, dashboards| MGR
+    SYS --&gt;|Compliance reports, audit trail| AUD[Regulatory Auditor]
+    SYS --&gt; STORE[(Database + WORM Storage)]
+</pre>
+<h3 id="7-4-calibration-data-flow-level-1">7.4 Calibration Data Flow (Level 1) <a class="anc" href="#7-4-calibration-data-flow-level-1" aria-label="Link">#</a></h3>
+<pre class="mermaid">flowchart TD
+    A[Scheduler generates task] --&gt; B[Alert to BMET/Manager]
+    B --&gt; C[BMET scans asset QR]
+    C --&gt; D{Reference standards valid?}
+    D -- No --&gt; E[Block: quarantine standard / select valid one]
+    D -- Yes --&gt; F[Enter as-found readings]
+    F --&gt; G[Auto pass/fail vs tolerance]
+    G -- Fail --&gt; H[Adjust and record as-left]
+    H --&gt; G
+    G -- Pass --&gt; I[E-signature: Performed by]
+    G -- Unrecoverable fail --&gt; J[Out of Service + Corrective WO]
+    I --&gt; K[Reviewer e-signature]
+    K --&gt; L[Generate PDF certificate + hash]
+    L --&gt; M[Store WORM + audit event]
+    M --&gt; N[Asset Operational, next due date set]
+</pre>
+<h3 id="7-5-entity-relationship-overview">7.5 Entity Relationship Overview <a class="anc" href="#7-5-entity-relationship-overview" aria-label="Link">#</a></h3>
+<pre class="mermaid">erDiagram
+    DEVICEMODEL ||--o{ ASSET : &quot;instance of&quot;
+    ASSET ||--o{ TASK : has
+    TASK ||--o| CALIBRATIONRECORD : produces
+    CALIBRATIONRECORD }o--o{ REFERENCESTANDARD : uses
+    ASSET ||--o{ WORKORDER : has
+    WORKORDER }o--o{ SPAREPART : consumes
+    DEVICEMODEL }o--o{ SPAREPART : compatible
+    VENDOR ||--o{ CONTRACT : holds
+    CONTRACT }o--o{ ASSET : covers
+    USER ||--o{ AUDITEVENT : generates
+    ASSET ||--o{ AUDITEVENT : subject
+</pre>
+<h3 id="7-6-deployment-model-summary">7.6 Deployment Model (Summary) <a class="anc" href="#7-6-deployment-model-summary" aria-label="Link">#</a></h3>
+<ul>
+<li><strong>Presentation tier:</strong> SPA web client; native/hybrid mobile apps with encrypted local store.</li>
+<li><strong>Application tier:</strong> stateless containerized services behind API gateway with autoscaling.</li>
+<li><strong>Data tier:</strong> managed PostgreSQL (multi-AZ), append-only audit store, S3-compatible WORM object storage, message queue for scheduler/notifications.</li>
+<li><strong>Cross-cutting:</strong> KMS, SIEM, centralized logging, observability (metrics/tracing), CI/CD with validation gates.</li>
+</ul>
+<hr />
+<h2 id="8-appendices-regulatory-guidelines">8. Appendices &amp; Regulatory Guidelines <a class="anc" href="#8-appendices-regulatory-guidelines" aria-label="Link">#</a></h2>
+<h3 id="8-1-regulatory-compliance-mapping">8.1 Regulatory Compliance Mapping <a class="anc" href="#8-1-regulatory-compliance-mapping" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Regulation / Standard</th>
+<th>Clause / Control</th>
+<th>MedEquipTrack Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>21 CFR 11.10(a)</strong></td>
+<td>System validation</td>
+<td>NFR-4.4, DC-5</td>
+</tr>
+<tr>
+<td><strong>21 CFR 11.10(b)</strong></td>
+<td>Accurate, complete copies of records</td>
+<td>FR-7.3, FR-7.5, DR-5</td>
+</tr>
+<tr>
+<td><strong>21 CFR 11.10(d)</strong></td>
+<td>Limiting system access</td>
+<td>NFR-2.1, NFR-2.2</td>
+</tr>
+<tr>
+<td><strong>21 CFR 11.10(e)</strong></td>
+<td>Secure, time-stamped audit trails</td>
+<td>FR-7.1, FR-7.2, DC-2</td>
+</tr>
+<tr>
+<td><strong>21 CFR 11.10(g)</strong></td>
+<td>Authority checks</td>
+<td>FR-3.6, FR-2.7</td>
+</tr>
+<tr>
+<td><strong>21 CFR 11.50 / 11.70</strong></td>
+<td>Signature manifestation and record linking</td>
+<td>FR-4.7, FR-4.8, SC-3</td>
+</tr>
+<tr>
+<td><strong>21 CFR 11.100 / 11.200 / 11.300</strong></td>
+<td>Unique e-signatures, two-component authentication, credential controls</td>
+<td>FR-4.7, NFR-2.2</td>
+</tr>
+<tr>
+<td><strong>ISO 13485:2016 cl. 6.3</strong></td>
+<td>Infrastructure and maintenance activities</td>
+<td>Sections 3.1–3.3</td>
+</tr>
+<tr>
+<td><strong>ISO 13485:2016 cl. 7.6</strong></td>
+<td>Control of monitoring and measuring equipment (calibration, traceability, validity of prior results)</td>
+<td>FR-4.3, FR-4.6, FR-4.11</td>
+</tr>
+<tr>
+<td><strong>ISO 13485:2016 cl. 4.2.5</strong></td>
+<td>Control of records</td>
+<td>FR-7.1, DR-1</td>
+</tr>
+<tr>
+<td><strong>ISO/IEC 17025:2017 cl. 6.5</strong></td>
+<td>Metrological traceability</td>
+<td>FR-4.9, FR-4.11, DC-4</td>
+</tr>
+<tr>
+<td><strong>IEC 62353</strong></td>
+<td>Recurrent testing of medical electrical equipment</td>
+<td>FR-4.13</td>
+</tr>
+<tr>
+<td><strong>NABH / JCI</strong></td>
+<td>Medical equipment inventory, maintenance, calibration and safety programs</td>
+<td>FR-7.4, FR-7.5</td>
+</tr>
+<tr>
+<td><strong>HIPAA Security Rule</strong></td>
+<td>Access control, audit controls, transmission security</td>
+<td>NFR-2.x, SC-1</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="8-2-requirements-traceability-matrix-excerpt">8.2 Requirements Traceability Matrix (Excerpt) <a class="anc" href="#8-2-requirements-traceability-matrix-excerpt" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Problem (1.2)</th>
+<th>Requirement(s)</th>
+<th>Verification Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 Uncalibrated devices in use</td>
+<td>FR-2.5, FR-2.6, FR-2.7, FR-4.6</td>
+<td>Test (scheduler simulation), Demonstration</td>
+</tr>
+<tr>
+<td>P2 Missed PM</td>
+<td>FR-2.1–2.4, FR-7.4</td>
+<td>Test, Analysis (compliance report reconciliation)</td>
+</tr>
+<tr>
+<td>P3 Unknown location/status</td>
+<td>FR-1.3, FR-1.5, FR-1.8</td>
+<td>Demonstration, Test</td>
+</tr>
+<tr>
+<td>P4 Audit non-compliance</td>
+<td>FR-7.1–7.5, FR-4.7–4.10</td>
+<td>Inspection, Test, Audit dry-run</td>
+</tr>
+<tr>
+<td>P5 Unexpected downtime</td>
+<td>FR-3.2, FR-3.3, FR-3.7, FR-3.10</td>
+<td>Test, Analysis (MTBF/MTTR)</td>
+</tr>
+<tr>
+<td>P6 Invalid reference standards</td>
+<td>FR-4.3, FR-4.11</td>
+<td>Test</td>
+</tr>
+<tr>
+<td>P7 Lapsed contracts</td>
+<td>FR-6.2–6.5</td>
+<td>Test</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="8-3-role-permission-matrix-summary">8.3 Role-Permission Matrix (Summary) <a class="anc" href="#8-3-role-permission-matrix-summary" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>BMET</th>
+<th>BME Manager</th>
+<th>Requester</th>
+<th>Vendor / Auditor</th>
+<th>Sys Admin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Register / edit asset</td>
+<td>Edit (assigned dept)</td>
+<td>Full</td>
+<td>–</td>
+<td>–</td>
+<td>Config only</td>
+</tr>
+<tr>
+<td>Create breakdown ticket</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Execute calibration / PM</td>
+<td>✔</td>
+<td>✔</td>
+<td>–</td>
+<td>Own uploads</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Approve / verify WO</td>
+<td>–</td>
+<td>✔</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Quarantine override</td>
+<td>–</td>
+<td>✔ (e-sign)</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Decommission asset</td>
+<td>–</td>
+<td>✔ (e-sign)</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Manage contracts / vendors</td>
+<td>View</td>
+<td>Full</td>
+<td>–</td>
+<td>Own contract (view)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>View audit trail</td>
+<td>Own actions</td>
+<td>Full</td>
+<td>–</td>
+<td>Read-only (Auditor)</td>
+<td>Full read; no edit</td>
+</tr>
+<tr>
+<td>Manage users / roles / config</td>
+<td>–</td>
+<td>Limited (thresholds)</td>
+<td>–</td>
+<td>–</td>
+<td>Full</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="8-4-sample-default-configuration">8.4 Sample Default Configuration <a class="anc" href="#8-4-sample-default-configuration" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Risk Category</th>
+<th>Example Devices</th>
+<th>Default PM / Calibration Interval</th>
+<th>Grace Period</th>
+<th>Alert Lead Times</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>Ventilators, defibrillators, anaesthesia machines</td>
+<td>Quarterly PM; semi-annual calibration</td>
+<td>0 days</td>
+<td>30/14/7/1</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Infusion pumps, patient monitors</td>
+<td>Semi-annual</td>
+<td>3 days</td>
+<td>30/14/7/1</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>ECG machines, suction units</td>
+<td>Annual</td>
+<td>7 days</td>
+<td>30/14/7</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>Thermometers, BP cuffs</td>
+<td>Annual / on-condition</td>
+<td>14 days</td>
+<td>30/7</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Defaults are illustrative starting points; the manufacturer's instructions for use, local regulation and facility risk assessment take precedence.</em></p>
+<h3 id="8-5-acceptance-and-release-criteria">8.5 Acceptance and Release Criteria <a class="anc" href="#8-5-acceptance-and-release-criteria" aria-label="Link">#</a></h3>
+<ol>
+<li>All <strong>H</strong>-priority requirements passed in OQ/PQ with documented evidence.</li>
+<li>No open critical or high defects; no unresolved critical/high security findings.</li>
+<li>Successful mock audit (NABH/JCI/ISO scenario) using system-generated reports only.</li>
+<li>Disaster-recovery and offline-sync tests passed on target devices.</li>
+<li>Signed validation summary report approved by QA and Regulatory Affairs.</li>
+</ol>
+<h3 id="8-6-open-issues-and-risks">8.6 Open Issues and Risks <a class="anc" href="#8-6-open-issues-and-risks" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Owner</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OI-1</td>
+<td>Confirm applicable Part 11 scope and local equivalents per deployment jurisdiction</td>
+<td>Regulatory Affairs</td>
+<td>Before design freeze</td>
+</tr>
+<tr>
+<td>OI-2</td>
+<td>Finalize retention periods per country (DR-1)</td>
+<td>Legal / QA</td>
+<td>Before design freeze</td>
+</tr>
+<tr>
+<td>OI-3</td>
+<td>Select SMS provider and RFID tag standard (HF vs UHF)</td>
+<td>BME / IT</td>
+<td>Architecture review</td>
+</tr>
+<tr>
+<td>OI-4</td>
+<td>Decide whether to include optional PAdES certificate signing (NFR-2.5) in v1.0</td>
+<td>Product / Security</td>
+<td>Sprint 0</td>
+</tr>
+<tr>
+<td>OI-5</td>
+<td>Define HIS integration profile (HL7 v2 vs FHIR) with pilot hospital</td>
+<td>Integration Lead</td>
+<td>Pilot kickoff</td>
+</tr>
+<tr>
+<td>R-1</td>
+<td>Adoption risk: incomplete asset tagging delays value</td>
+<td>BME Manager</td>
+<td>Mitigation: onboarding sprint and bulk import (FR-1.9)</td>
+</tr>
+<tr>
+<td>R-2</td>
+<td>Offline e-signature legal acceptability</td>
+<td>Regulatory Affairs</td>
+<td>Mitigation: provisional signature model (NFR-1.8)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="8-7-revision-history">8.7 Revision History <a class="anc" href="#8-7-revision-history" aria-label="Link">#</a></h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0 (Draft)</td>
+<td>28 Sep 2026</td>
+<td>Lead Engineer / Biomedical Systems Team</td>
+<td>Initial draft for technical and regulatory review</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>End of Document</em></p>
+</main></div>
+<a id="top" href="#">↑ Top</a>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+<script>
+try{var d=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches;
+mermaid.initialize({startOnLoad:true,theme:d?'dark':'default',securityLevel:'loose'});}catch(e){}
+var sb=document.getElementById('sb');
+document.getElementById('mb').onclick=function(){sb.classList.toggle('open')};
+sb.addEventListener('click',function(e){if(e.target.tagName==='A')sb.classList.remove('open')});
+var links=[].slice.call(sb.querySelectorAll('a'));
+var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+var hs=[].slice.call(document.querySelectorAll('#doc h2[id],#doc h3[id]')).filter(function(h){return map[h.id]});
+function spy(){var cur=null;for(var i=0;i<hs.length;i++){if(hs[i].getBoundingClientRect().top<120)cur=hs[i]}
+links.forEach(function(a){a.classList.remove('on')});
+if(cur&&map[cur.id]){map[cur.id].classList.add('on')}}
+window.addEventListener('scroll',spy,{passive:true});spy();
+</script>
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
+</body></html>
